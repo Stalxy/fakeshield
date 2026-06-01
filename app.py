@@ -185,7 +185,7 @@ footer { display: none; }
     border-radius: 10px;
     padding: 1.2rem 1.5rem; margin: 1rem 0 1.5rem;
 }
-.insight-box::before { content: "💡"; position: absolute; top: 1rem; right: 1rem; font-size: 1.1rem; }
+.insight-box::before { position: absolute; top: 1rem; right: 1rem; font-size: 1.1rem; }
 .insight-title { font-size: 0.75rem; font-weight: 600; color: #457B9D; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
 .insight-text { font-size: 0.88rem; line-height: 1.65; color: #1D3557; margin: 0; }
 .insight-text strong { color: #E63946; }
