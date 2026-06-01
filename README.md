@@ -1,117 +1,91 @@
 # FakeShield Dashboard
 
-## Dashboard Analisis dan Deteksi Berita Hoaks Berbahasa Indonesia
+> Aplikasi analisis dan deteksi berita hoaks berbahasa Indonesia berbasis Deep Learning
 
-FakeShield Dashboard aplikasi berbasis Streamlit yang digunakan untuk menganalisis karakteristik berita berbahasa Indonesia serta melakukan klasifikasi berita ke dalam kategori **Hoaks** atau **Valid** menggunakan model Deep Learning **BiLSTM dengan Bahdanau Attention**.
+FakeShield mengklasifikasikan berita Indonesia sebagai **Hoaks** atau **Valid** menggunakan model **BiLSTM + Bahdanau Attention**, dilengkapi dashboard eksplorasi dataset interaktif.
+
+**Live Demo:** [fakeshield.streamlit.app](https://fakeshield.streamlit.app)
+
+---
+
+## Fitur
+
+### Dashboard Analisis Dataset
+Eksplorasi interaktif dataset berita Indonesia yang telah dibersihkan dan diseimbangkan:
+- Distribusi berita Hoaks vs Valid
+- Analisis kategori berita
+- Pengaruh panjang teks terhadap klasifikasi
+- Analisis kata kunci dengan TF-IDF
+- Tren publikasi berita periode 2024–2026
+
+### Demo Prediksi
+Input teks berita dan dapatkan:
+- Klasifikasi **Hoaks** / **Valid**
+- Confidence score
+- Visualisasi kata berpengaruh via Bahdanau Attention
 
 ---
 
 ## Struktur Proyek
 
-```text
+```
 FakeShield/
-├── data/
-│   └── dataset_fakeshield_v2_CLEANED_BALANCED 37K.csv
-│
-├── models/
-│   ├── tokenizer (5).json
-│   ├── scaler (2).pkl
-│   └── fakeshield_model (6).keras/
-│       ├── config.json
-│       ├── metadata.json
-│       └── model.weights.h5
-│
 ├── app.py
 ├── requirements.txt
-└── README.md
-
+├── README.md
+├── data/
+│   └── dataset_fakeshield_v2_CLEANED_BALANCED 37K.csv
+└── models/
+    ├── tokenizer (5).json
+    ├── scaler (2).pkl
+    └── fakeshield_model (6).keras/
+        ├── config.json
+        ├── metadata.json
+        └── model.weights.h5
 ```
+
+---
 
 ## Setup
 
-### 1. Install Dependencies
-
+### 1. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Pastikan Dataset Tersedia
-
-```text
-data/
-└── dataset_fakeshield_v2_CLEANED_BALANCED 37K.csv
-```
-
-### 3. Pastikan File Model Tersedia
-
-Struktur folder `models/` harus :
-
-```text
-models/
-├── tokenizer (5).json
-├── scaler (2).pkl
-│
-└── fakeshield_model (6).keras/
-    ├── config.json
-    ├── metadata.json
-    └── model.weights.h5
-```
-
-### 4. Jalankan Aplikasi
-
+### 2. Jalankan aplikasi
 ```bash
 streamlit run app.py
 ```
 
-Aplikasi akan berjalan pada:
+Buka di browser: `http://localhost:8501`
 
-```text
-http://localhost:8501
-```
-
-## Fitur Utama
-
-### Dashboard Analisis Dataset
-
-Dashboard interaktif untuk mengeksplorasi dataset berita Indonesia yang telah melalui proses pembersihan dan penyeimbangan data.
-
-Visualisasi yang tersedia:
-
-- Distribusi berita Hoaks dan Valid
-- Analisis kategori berita
-- Pengaruh panjang teks terhadap klasifikasi
-- Analisis kata kunci menggunakan TF-IDF
-- Tren publikasi berita periode 2024–2026
-
-### Demo Prediksi
-
-Pengguna dapat memasukkan teks berita secara langsung dan sistem akan:
-
-- Mengklasifikasikan berita sebagai Hoaks atau Valid
-- Menampilkan confidence score
-- Menampilkan kata-kata yang paling berpengaruh terhadap prediksi menggunakan mekanisme Bahdanau Attention
+> **Catatan:** Pastikan folder `models/` dan `data/` sudah ada sesuai struktur di atas sebelum menjalankan aplikasi.
 
 ---
 
 ## Arsitektur Model
 
-Model yang digunakan:
+| Layer | Detail |
+|---|---|
+| Embedding | 50.000 vocab, dim 256 |
+| Encoder | BiLSTM (128 units per arah) |
+| Attention | Bahdanau Additive Attention |
+| Output | Dense + Sigmoid (biner) |
 
-- Embedding Layer
-- BiLSTM
-- Bahdanau Attention
-- Dense Layer
-- Sigmoid Output Layer
-
-Model memanfaatkan kombinasi:
-
-### Fitur Teks
-
-- Isi berita
-
-### Fitur Numerik
-
+**Fitur input:**
+- Teks berita (tokenized)
 - Jumlah kata
 - Rasio huruf kapital
-- Jumlah tanda seru
-- Jumlah tanda tanya
+- Jumlah tanda seru & tanda tanya
+
+---
+
+## Dataset
+
+| Properti | Nilai |
+|---|---|
+| Total artikel | 37.402 |
+| Periode | 2024–2026 |
+| Bahasa | Indonesia |
+| Label | Hoaks & Valid (balanced) |
