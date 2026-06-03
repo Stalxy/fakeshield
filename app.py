@@ -741,11 +741,6 @@ elif "Demo Prediksi" in page:
                 st.markdown(f"""
                 <div style='margin-bottom:.5rem;'>
                     <span style='font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:{bar_color};'> Pengaruh Kata Terhadap Hasil</span><br>
-                    <span style='font-size:.78rem;color:#64748B;'>
-                        {"Kata-kata yang paling diperhatikan model saat memprediksi hoaks (Bahdanau Attention Score)"
-                         if is_hoaks else
-                         "Kata-kata yang paling diperhatikan model saat memprediksi valid (Bahdanau Attention Score)"}
-                    </span>
                 </div>""", unsafe_allow_html=True)
 
                 if top_words:
