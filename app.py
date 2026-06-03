@@ -19,22 +19,24 @@ warnings.filterwarnings("ignore")
 @keras.utils.register_keras_serializable()
 class BahdanauAttention(keras.layers.Layer):
     def __init__(self, units, **kwargs):
-        super().__init__(**kwargs); self.units = units
+        super().__init__(**kwargs)
+        self.units = units
+
     def build(self, input_shape):
         d = input_shape[-1]
-        self.W = self.add_weight("W",(d,self.units),"glorot_uniform")
-        self.V = self.add_weight("V",(self.units,1),"glorot_uniform")
+        self.W = self.add_weight(name="W", shape=(d, self.units), initializer="glorot_uniform")
+        self.V = self.add_weight(name="V", shape=(self.units, 1), initializer="glorot_uniform")
         super().build(input_shape)
 
     def call(self, inputs):
-        score   = tf.nn.tanh(tf.tensordot(inputs, self.W, axes=[[2], [0]]))
-        score   = tf.tensordot(score, self.V, axes=[[2], [0]])
+        score = tf.nn.tanh(tf.tensordot(inputs, self.W, axes=[[2], [0]]))
+        score = tf.tensordot(score, self.V, axes=[[2], [0]])
         weights = tf.nn.softmax(score, axis=1)
         context = tf.reduce_sum(inputs * weights, axis=1)
         return context, weights
 
     def get_config(self):
-        cfg = super().get_config(); cfg.update({"units": self.units}); return cfg
+        return {**super().get_config(), "units": self.units}
 
 # ─── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(page_title="FakeShield", layout="wide", initial_sidebar_state="expanded")
