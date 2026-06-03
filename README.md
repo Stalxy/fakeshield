@@ -34,11 +34,11 @@ FakeShield/
 ├── requirements.txt
 ├── README.md
 ├── data/
-│   └── dataset_fakeshield_v2_CLEANED_BALANCED 37K.csv
+│   └── dataset_fakeshield_FINAL_ENGINEERED 39K.csv
 └── models/
-    ├── tokenizer (5).json
-    ├── scaler (2).pkl
-    └── fakeshield_model (6).keras/
+    ├── tokenizer (6).json
+    ├── scaler (3).pkl
+    └── fakeshield_model (7).keras/
         ├── config.json
         ├── metadata.json
         └── model.weights.h5
@@ -69,15 +69,16 @@ Buka di browser: `http://localhost:8501`
 | Layer | Detail |
 |---|---|
 | Embedding | 50.000 vocab, dim 256 |
-| Encoder | BiLSTM (128 units per arah) |
-| Attention | Bahdanau Additive Attention |
+| BiLSTM | 128 units per arah, max_len 150 |
+| Attention | Bahdanau Additive Attention (64 units) |
 | Output | Dense + Sigmoid (biner) |
 
 **Fitur input:**
-- Teks berita (tokenized)
-- Jumlah kata
+- Teks berita (tokenized, max 150 token)
 - Rasio huruf kapital
-- Jumlah tanda seru & tanda tanya
+- Jumlah tanda seru
+- Jumlah tanda tanya
+- Jumlah kata
 
 ---
 
@@ -85,7 +86,7 @@ Buka di browser: `http://localhost:8501`
 
 | Properti | Nilai |
 |---|---|
-| Total artikel | 37.402 |
+| Total artikel | ~39.000 |
 | Periode | 2024–2026 |
 | Bahasa | Indonesia |
 | Label | Hoaks & Valid (balanced) |

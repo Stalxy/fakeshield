@@ -4,5 +4,6 @@ numpy>=1.26.0
 plotly>=6.0.0
 scikit-learn>=1.6.0
 tensorflow>=2.19.0
-keras>=3.11.0
+keras>=3.13.2
+tf-keras>=2.19.0
 h5py>=3.14.0
