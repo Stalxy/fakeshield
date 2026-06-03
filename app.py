@@ -676,11 +676,16 @@ elif "Demo Prediksi" in page:
                     st.write("OUTPUT 1 SHAPE:", np.array(outputs[1]).shape)
 
                     prob = float(outputs[0][0][0])
-                    attn_vec = np.array(outputs[1][0])
-                    n = min(len(words_clean), MAX_LEN)
+
+                    attn_vec = np.array(outputs[1]).squeeze()
+
+                    n = min(len(words_clean), len(attn_vec), MAX_LEN)
+
                     word_attn = {}
+
                     for i in range(n):
-                        w = words_clean[i]; word_attn[w] = word_attn.get(w, 0.0) + float(attn_vec[i])
+                        w = words_clean[i]
+                        word_attn[w] = word_attn.get(w, 0.0) + float(attn_vec[i])
                     if word_attn:
                         mx = max(word_attn.values()) or 1.0
                         attn_raw = {k: round(v/mx, 4) for k, v in word_attn.items()}
